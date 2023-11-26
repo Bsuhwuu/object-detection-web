@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+  <title>Object Detection</title>
+</head>
+<body>
+  <h1>Object Detection</h1>
+  <video id="webcam" autoplay playsinline width="640" height="480"></video>
+  <p id="prediction"></p>
+
+  <script>
+    // Load the TensorFlow.js model
+    async function loadModel() {
+      const model = await tf.loadGraphModel('path/to/your/model.json');
+      return model;
+    }
+
+    // Function to detect objects
+    async function detectObjects(model, video) {
+      const predictions = await model.predict(video);
+      // Implement logic to display predictions
+    }
+
+    // Initialize the camera and start object detection
+    async function initCamera() {
+      const video = document.getElementById('webcam');
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ 'video': true });
+        video.srcObject = stream;
+        loadModel().then((model) => detectObjects(model, video));
+      } catch (error) {
+        console.error('Error accessing the camera: ', error);
+      }
+    }
+
+    // Run the camera initialization function
+    initCamera();
+  </script>
+</body>
+</html>
